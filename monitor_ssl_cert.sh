@@ -1,10 +1,26 @@
 #!/usr/bin/ksh
+########################################################################################
+#  This script aim to monoror SSL cert validity and alert in case v
+#  validity will fail in few days.
+#
+# Site    : http://domotique.web2diz.net/
+# Details : http://domotique.web2diz.net/?p=878
+# Source  : https://github.com/Sirus10/scripting/blob/master/monitor_ssl_cert.sh
+# License : CC BY-SA 4.0
+#
+#  Usage:
+#  ./monitor_ssl_cert.sh
+#
+# Daily scheduling in crontab : 
+# 30 7 * * *  /root/scripts/monitor_ssl_cert.sh >> /tmp/monitor_ssl_cert.log
+#
+#######################################################################################
 server=domoticz  	# URL to monitor
-port=443			# PORT SSL (default 443) 
+port=443		# PORT SSL (default 443) 
 RPI_NAME=`hostname`
 # FREE SMS API SETUP
-SMS_FREE_USER=<free api user>				# Put SMS user API KEY (see mobile.free.fr) 
-SMS_FREE_PASSWD=<free api password>	# Put SMS pass API KEY (see mobile.free.fr) 
+SMS_FREE_USER=<free api user>		# Put SMS user API KEY (see mobile.free.fr) or comment if not needed
+SMS_FREE_PASSWD=<free api password>	# Put SMS pass API KEY (see mobile.free.fr) or comment if not needed
 SMS_FREE_API="https://smsapi.free-mobile.fr/sendmsg?user=$SMS_FREE_USER&pass=$SMS_FREE_PASSWD&msg=$RPI_NAME ALERT : "
 
 echo server:port :  https://$server:$port
@@ -42,7 +58,6 @@ then
 		ALERT_MESS="SSL Cert expiration in $dayvalid days for $server:$port!"
 		# SMS alert 
 		curl -k -f "$SMS_FREE_API$ALERT_MESS"
-		echo "$SMS_FREE_API$ALERT_MESS"
 		# Mail alert 
 		# echo $ALERT_MESS | mail -s "SSL Cert expiration " <put your email adress here> 
 		
