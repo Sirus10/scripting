@@ -18,10 +18,11 @@
 server=domoticz  	# URL to monitor
 port=443		# PORT SSL (default 443) 
 RPI_NAME=`hostname`
-# FREE SMS API SETUP
-SMS_FREE_USER=<free api user>		# Put SMS user API KEY (see mobile.free.fr) or comment if not needed
-SMS_FREE_PASSWD=<free api password>	# Put SMS pass API KEY (see mobile.free.fr) or comment if not needed
-SMS_FREE_API="https://smsapi.free-mobile.fr/sendmsg?user=$SMS_FREE_USER&pass=$SMS_FREE_PASSWD&msg=$RPI_NAME ALERT : "
+# FREE SMS API SETUP / Only if you want to use SMS feature
+# UNcomment the 3 lines below if you want to use this feature
+#SMS_FREE_USER=<free api user>		# Put SMS user API KEY (see mobile.free.fr) 
+#SMS_FREE_PASSWD=<free api password>	# Put SMS pass API KEY (see mobile.free.fr) 
+#SMS_FREE_API="https://smsapi.free-mobile.fr/sendmsg?user=$SMS_FREE_USER&pass=$SMS_FREE_PASSWD&msg=$RPI_NAME ALERT : "
 
 echo server:port :  https://$server:$port
 
@@ -56,10 +57,10 @@ if [ $dayvalid -lt 45 ]
 then
         echo "    Warning !!  "
 		ALERT_MESS="SSL Cert expiration in $dayvalid days for $server:$port!"
-		# SMS alert 
-		curl -k -f "$SMS_FREE_API$ALERT_MESS"
+		# SMS alert uncomment next line is you want to use SMS alerting
+		#curl -k -f "$SMS_FREE_API$ALERT_MESS"
 		# Mail alert 
-		# echo $ALERT_MESS | mail -s "SSL Cert expiration " <put your email adress here> 
+		echo $ALERT_MESS | mail -s "SSL Cert expiration " <put your email adress here> 
 		
 		
 else
