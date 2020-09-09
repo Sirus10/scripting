@@ -8,10 +8,10 @@
 #	Ex 1 : get all scenaios ids : 
 #		python main.py get_scenarios
 
-#  	Ex 1 : set shutter which is id = 123456 to valu 10% : 
+#  	Ex 2 : set shutter which is id = 123456 to value 10% : 
 #		 python main.py put_devices_data 123456 10.0
 #		
-#		
+#	Work in progress.... 	
 #		
 #		
 #########################################################
