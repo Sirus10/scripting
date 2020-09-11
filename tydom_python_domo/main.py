@@ -34,12 +34,12 @@ import ssl
 
 
 # Globals
-mac = "00:1A:25:03:20:13"
+mac = "00:1A:xx:xx::xx"
 login = mac
-password = "Bonjour001"
+password = "your passwd"
 # Local ip address or mediation.tydom.com for remote connexion
 # host = "mediation.tydom.com" #"192.168.0.20"
-host = "192.168.1.43"
+host = "192.168.x.xx"
 
 action ="not set"
 id = "not set"
@@ -317,7 +317,7 @@ async def main_task():
 										 
 		 
 
-        # Get informations (not very useful)
+            # Get informations (not very useful)
         if action == "get_info":
             await get_info(websocket)
 
@@ -336,27 +336,30 @@ async def main_task():
 
         # Get data of a specific device
         if action == "get_device_data":
-            await get_device_data(websocket, id)		
+            await get_device_data(websocket, id)
+
+                # Get data of a specific device
+        if action == "get_configs_file":
+            await get_configs_file(websocket)
+
+                # Get data of a specific device
+        if action == "get_devices_meta":
+            await get_devices_meta(websocket)
+
+
 
         # Set a shutter position to 10%
         #await put_devices_data(websocket, 9, "position", "10.0")
         if action == "put_devices_data":
-            await put_devices_data(websocket, id, "position", "value")	
-		
+            await put_devices_data(websocket, id, "position", "value")
 
-        # await get_configs_file(websocket)
-        if action == "put_devices_data":
-            await put_devices_data(websocket)	
-			
-        # await get_devices_meta(websocket)
-        if action == "put_devices_data":
-            await put_devices_data(websocket)	
+
 
         # Get data of all device
         #await get_devices_data(websocket)
 
-	   # TODO : Wait hardcoded for now to put response from websocket server
+           # TODO : Wait hardcoded for now to put response from websocket server
         #time.sleep(45)
-		
+
 asyncio.get_event_loop().run_until_complete(main_task())
 
