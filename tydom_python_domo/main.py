@@ -1,19 +1,19 @@
 #!/usr/bin/env python
 #########################################################
-#	Addapted from initial work : 
-#	https://github.com/cth35/tydom_python
+#       Addapted from initial work :
+#       https://github.com/cth35/tydom_python
 #
-#	Usage : python main.py [action, id, valueToSet]
+#       Usage : python main.py [action, id, valueToSet]
 #
-#	Ex 1 : get all scenaios ids : 
-#		python main.py get_scenarios
+#       Ex 1 : get all scenaios ids :
+#               python main.py get_scenarios
 
-#  	Ex 2 : set shutter which is id = 123456 to value 10% : 
-#		 python main.py put_devices_data 123456 10.0
-#		
-#	Work in progress.... 	
-#		
-#		
+#       Ex 1 : set shutter which is id = 123456 to valu 10% :
+#                python main.py put_devices_data 123456 10.0
+#
+#
+#
+#
 #########################################################
 import asyncio
 import websockets
@@ -34,32 +34,32 @@ import ssl
 
 
 # Globals
-mac = "00:1A:xx:xx::xx"
+mac = "00:1A:25:03:20:13"
 login = mac
-password = "your passwd"
+password = "Bonjour001"
 # Local ip address or mediation.tydom.com for remote connexion
 # host = "mediation.tydom.com" #"192.168.0.20"
-host = "192.168.x.xx"
+host = "192.168.1.43"
 
 action ="not set"
 id = "not set"
-value = "not set"
+TargetValue = "not set"
 
 print(sys.argv)
 
 if len(sys.argv) > 1:
-    action =  sys.argv[1] 
+    action =  sys.argv[1]
 if len(sys.argv) > 2:
-    id = sys.argv[2] 
+    id = sys.argv[2]
 if len(sys.argv) > 3:
-    value = sys.argv[3] 
+    TargetValue = sys.argv[3]
 
 
 
 
 print("Action : "+ action)
 print("id : "+ id )
-print("value : "+ value)
+print("value : "+ TargetValue)
 
 # Alarm available keywords
 # alarmMode  : ON or ZONE or OFF or TEST or MAINTENANCE
@@ -288,7 +288,7 @@ async def main_task():
                     "Sec-WebSocket-Key": generate_random_key(),
                     "Sec-WebSocket-Version": "13"
                     }
- #   http.client.HTTPSConnection.debuglevel = 1 
+ #   http.client.HTTPSConnection.debuglevel = 1
  #  http.client.HTTPConnection.debuglevel = 0
     # Create HTTPS connection on tydom server
     conn = http.client.HTTPSConnection(host, 443, context=ssl_context)
@@ -313,11 +313,11 @@ async def main_task():
     async with websockets.client.connect('wss://{}:443/mediation/client?mac={}&appli=1'.format(host, mac),
                                          extra_headers=websocketHeaders, ssl=websocket_ssl_context) as websocket:
 
-										 
-										 
-		 
 
-            # Get informations (not very useful)
+
+
+
+        # Get informations (not very useful)
         if action == "get_info":
             await get_info(websocket)
 
@@ -351,8 +351,7 @@ async def main_task():
         # Set a shutter position to 10%
         #await put_devices_data(websocket, 9, "position", "10.0")
         if action == "put_devices_data":
-            await put_devices_data(websocket, id, "position", "value")
-
+            await put_devices_data(websocket, id, "position", TargetValue)
 
 
         # Get data of all device
@@ -362,4 +361,3 @@ async def main_task():
         #time.sleep(45)
 
 asyncio.get_event_loop().run_until_complete(main_task())
-
