@@ -34,12 +34,12 @@ import ssl
 
 
 # Globals
-mac = "00:1A:25:03:20:13"
+mac = "00:xxxxxxxxx"
 login = mac
-password = "Bonjour001"
+password = "xxxxx"
 # Local ip address or mediation.tydom.com for remote connexion
 # host = "mediation.tydom.com" #"192.168.0.20"
-host = "192.168.1.43"
+host = "192.168.xx"
 
 action ="not set"
 id = "not set"
