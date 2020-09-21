@@ -34,18 +34,18 @@ import ssl
 
 
 # Globals
-mac = "00:xxxxxxxxx"
+mac = "00:1A:xxxxxx"
 login = mac
-password = "xxxxx"
+password = "yourPAss"
 # Local ip address or mediation.tydom.com for remote connexion
 # host = "mediation.tydom.com" #"192.168.0.20"
-host = "192.168.xx"
+host = "192.168.x.x"
 
 action ="not set"
 id = "not set"
 TargetValue = "not set"
 
-print(sys.argv)
+#print(sys.argv)
 
 if len(sys.argv) > 1:
     action =  sys.argv[1]
@@ -57,9 +57,9 @@ if len(sys.argv) > 3:
 
 
 
-print("Action : "+ action)
-print("id : "+ id )
-print("value : "+ TargetValue)
+print("DEB - Action : "+ action)
+print("DEB - id : "+ id )
+print("DEB - value : "+ TargetValue)
 
 # Alarm available keywords
 # alarmMode  : ON or ZONE or OFF or TEST or MAINTENANCE
@@ -316,6 +316,11 @@ async def main_task():
 
 
 
+        # Set a shutter position to 10%
+        #await put_devices_data(websocket, 9, "position", "10.0")
+        if action == "put_devices_data":
+            await put_devices_data(websocket, id, "position", TargetValue)
+
 
         # Get informations (not very useful)
         if action == "get_info":
@@ -328,7 +333,6 @@ async def main_task():
         # Get scenarios ids
         if action == "get_scenarios":
             await get_scenarios(websocket)
-
 
         # Run scenario with scn id returned in previous command
         if action == "put_scenarios":
@@ -346,18 +350,25 @@ async def main_task():
         if action == "get_devices_meta":
             await get_devices_meta(websocket)
 
-
-
-        # Set a shutter position to 10%
-        #await put_devices_data(websocket, 9, "position", "10.0")
-        if action == "put_devices_data":
-            await put_devices_data(websocket, id, "position", TargetValue)
-
-
         # Get data of all device
-        #await get_devices_data(websocket)
+        if action == "get_devices_data":
+            await get_devices_data(websocket)
 
-           # TODO : Wait hardcoded for now to put response from websocket server
+		# Get data of status of all device
+        if action == "get_status":
+            await get_devices_data(websocket)
+            await get_configs_file(websocket)	
+
+
+		# do that anytime to update the status file :  	
+        print("DEB - Action : get_devices_data") 
+        await get_devices_data(websocket)
+        print("DEB - Action : get_configs_file")
+        await get_configs_file(websocket)
+
+
+
+		# TODO : Wait hardcoded for now to put response from websocket server
         #time.sleep(45)
 
 asyncio.get_event_loop().run_until_complete(main_task())
