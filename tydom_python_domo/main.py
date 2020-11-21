@@ -8,38 +8,30 @@
 #       Ex 1 : get all scenaios ids :
 #               python main.py get_scenarios
 #  
-#       Ex 1 : set shutter which is id = 123456 to valu 10% :
+#       Ex 2 : set shutter which is id = 123456 to valu 10% :
 #                python main.py put_devices_data 123456 10.0
 #
-#
+#       Ex 3 : set all shutter to valu 25% :
+#                python main.py put_devices_data all 25.0
 #
 #
 #########################################################
-import asyncio
-import websockets
-import http.client
+import asyncio, websockets, http.client, sys, logging, urllib3, json, os, base64, time, ssl
 from requests.auth import HTTPDigestAuth
-import sys
-import logging
 from http.client import HTTPResponse
 from io import BytesIO
-import urllib3
-import json
-import os
-import base64
-import time
 from http.server import BaseHTTPRequestHandler
-import ssl
+
 
 
 
 # Globals
-mac = "00:1A:xxxxxx"
+mac = "00:<put your mac adress>"
 login = mac
-password = "yourPAss"
+password = "<put you password>"
 # Local ip address or mediation.tydom.com for remote connexion
 # host = "mediation.tydom.com" #"192.168.0.20"
-host = "192.168.x.x"
+host = "192.<put tydom ip>"
 
 action ="not set"
 id = "not set"
@@ -279,6 +271,7 @@ async def get_device_data(websocket, id):
 # Main async task
 @asyncio.coroutine
 async def main_task():
+    # logging.basicConfig()
     logging.basicConfig(stream=sys.stdout, level=0)
     # logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
     httpHeaders =  {"Connection": "Upgrade",
@@ -316,11 +309,16 @@ async def main_task():
 
 
 
-        # Set a shutter position to 10%
-        #await put_devices_data(websocket, 9, "position", "10.0")
+        # Set all shutter position to same position
         if action == "put_devices_data":
-            await put_devices_data(websocket, id, "position", TargetValue)
+            if id == "all":
+                  await put_devices_data(websocket, <devicesid_1>, "position", TargetValue)
+                  await put_devices_data(websocket, <devicesid_2>, "position", TargetValue)
+                  await put_devices_data(websocket, <devicesid_3>, "position", TargetValue)
+                  await put_devices_data(websocket, <devicesid_4>, "position", TargetValue)
 
+            else :
+                  await put_devices_data(websocket, id, "position", TargetValue)
 
         # Get informations (not very useful)
         if action == "get_info":
