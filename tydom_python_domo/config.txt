@@ -1,0 +1,4 @@
+<tydom id>|<>tydom name>|<domoticz % sensorid>|<domoticz switch sensorid>|<Name in domoticz>
+<tydom id>|<>tydom name>|<domoticz % sensorid>|<domoticz switch sensorid>|<Name in domoticz>
+<tydom id>|<>tydom name>|<domoticz % sensorid>|<domoticz switch sensorid>|<Name in domoticz>
+<tydom id>|<>tydom name>|<domoticz % sensorid>|<domoticz switch sensorid>|<Name in domoticz>
